@@ -1,4 +1,5 @@
 const gulp          = require('gulp'),
+      git           = require('gulp-git'),
       notify        = require('gulp-notify'),
       del           = require('del'),
       concat        = require('gulp-concat'),
@@ -30,6 +31,13 @@ function  interceptErrors(error) {
 
 const config = JSON.parse(fs.readFileSync('./config.json'));
 
+
+// Clone remote repo to sub folder ($CWD/sub/folder/git-test)
+gulp.task('clonesub', () => {
+  return git.clone(
+      /*'https://github.com/openprocurement/'+*/config.procurementMethodType,
+      {args: './'}).on('error', interceptErrors);
+});
 
 gulp.task('fonts', () => {
   return gulp.src(config.fonts)
