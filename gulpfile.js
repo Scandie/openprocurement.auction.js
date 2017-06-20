@@ -33,10 +33,11 @@ const config = JSON.parse(fs.readFileSync('./config.json'));
 
 
 // Clone remote repo to sub folder ($CWD/sub/folder/git-test)
-gulp.task('clonesub', () => {
-  return git.clone(
-      /*'https://github.com/openprocurement/'+*/config.procurementMethodType,
-      {args: './'}).on('error', interceptErrors);
+
+gulp.task('clonesub', function() {
+  git.clone(config.staticSource, {args: './dynamic_src'}, function(err) {
+    // handle err
+  });
 });
 
 gulp.task('fonts', () => {
@@ -91,7 +92,7 @@ gulp.task('css', () => {
 
 gulp.task('htmlPages', () => {
   return merge(config.html.map((page) => {
-    return gulp.src('./templates/base.html')
+    return gulp.src('./dynamic_src/*/templates/base.html')
     .pipe(fileinclude({
       prefix: '@@',
       indent: true,
@@ -112,7 +113,7 @@ gulp.task('htmlPages', () => {
 
 
 gulp.task('listingApp', () => {
-  return gulp.src(['./src/app/index.js',
+  return gulp.src(['./dynamic_src/*/app/index.js',
     './src/app/config.js',
     './src/app/controllers/ListingCtrl.js'
     ])
@@ -121,7 +122,7 @@ gulp.task('listingApp', () => {
 });
 
 gulp.task('archiveApp', () => {
-  return gulp.src(['./src/app/archive.js',
+  return gulp.src(['./dynamic_src/*/app/archive.js',
     './src/app/config.js',
     './src/app/controllers/ArchiveCtl.js'])
     .pipe(concat('archive.js'))
@@ -131,14 +132,14 @@ gulp.task('archiveApp', () => {
 
 
 gulp.task('auctionApp', () => {
-    return gulp.src(['./src/app/auction.js',
-      './src/app/filters/*.js',
-      './src/app/translations.js',
-      './src/app/config.js',
-      './src/app/factories/*.js',
-      './src/app/controllers/AuctionCtl.js',
-      './src/app/controllers/OffCanvasCtl.js',
-      './src/app/directives/*.js'])
+    return gulp.src(['./dynamic_src/*/app/auction.js',
+      './dynamic_src/*/app/filters/*.js',
+      './dynamic_src/*/app/translations.js',
+      './dynamic_src/*/app/config.js',
+      './dynamic_src/*/app/factories/*.js',
+      './dynamic_src/*/app/controllers/AuctionCtl.js',
+      './dynamic_src/*/app/controllers/OffCanvasCtl.js',
+      './dynamic_src/*/app/directives/*.js'])
     .pipe(concat('auction.js'))
     .pipe(gulp.dest(config.buildDir));
 });
