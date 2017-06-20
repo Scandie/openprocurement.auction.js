@@ -92,7 +92,7 @@ gulp.task('css', () => {
 
 gulp.task('htmlPages', () => {
   return merge(config.html.map((page) => {
-    return gulp.src('./dynamic_src/*/templates/base.html')
+    return gulp.src('./dynamic_src/templates/base.html')
     .pipe(fileinclude({
       prefix: '@@',
       indent: true,
@@ -113,18 +113,18 @@ gulp.task('htmlPages', () => {
 
 
 gulp.task('listingApp', () => {
-  return gulp.src(['./dynamic_src/*/app/index.js',
-    './src/app/config.js',
-    './src/app/controllers/ListingCtrl.js'
+  return gulp.src(['./dynamic_src/src/app/index.js',
+    './dynamic_src/src/app/config.js',
+    './dynamic_src/src/app/controllers/ListingCtrl.js'
     ])
     .pipe(concat('index.js'))
     .pipe(gulp.dest(config.buildDir));
 });
 
 gulp.task('archiveApp', () => {
-  return gulp.src(['./dynamic_src/*/app/archive.js',
-    './src/app/config.js',
-    './src/app/controllers/ArchiveCtl.js'])
+  return gulp.src(['./dynamic_src/src/app/archive.js',
+    './dynamic_src/src/app/config.js',
+    './dynamic_src/src/app/controllers/ArchiveCtl.js'])
     .pipe(concat('archive.js'))
     .pipe(gulp.dest(config.buildDir));
 });
@@ -132,14 +132,14 @@ gulp.task('archiveApp', () => {
 
 
 gulp.task('auctionApp', () => {
-    return gulp.src(['./dynamic_src/*/app/auction.js',
-      './dynamic_src/*/app/filters/*.js',
-      './dynamic_src/*/app/translations.js',
-      './dynamic_src/*/app/config.js',
-      './dynamic_src/*/app/factories/*.js',
-      './dynamic_src/*/app/controllers/AuctionCtl.js',
-      './dynamic_src/*/app/controllers/OffCanvasCtl.js',
-      './dynamic_src/*/app/directives/*.js'])
+    return gulp.src(['./dynamic_src/src/app/auction.js',
+      './dynamic_src/src/app/filters/*.js',
+      './dynamic_src/src/app/translations.js',
+      './dynamic_src/src/app/config.js',
+      './dynamic_src/src/app/factories/*.js',
+      './dynamic_src/src/app/controllers/AuctionCtl.js',
+      './dynamic_src/src/app/controllers/OffCanvasCtl.js',
+      './dynamic_src/src/app/directives/*.js'])
     .pipe(concat('auction.js'))
     .pipe(gulp.dest(config.buildDir));
 });
